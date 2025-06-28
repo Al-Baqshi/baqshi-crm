@@ -1,4 +1,4 @@
-# [Mizar](https://mizar.majestico.co)
+#Mizar](https://mizar.majestico.co)
 
 <a href="https://astro.build/">![Astro](.github/images/astro-icon.png)</a>
 <a href="https://tailwindcss.com/">![Tailwind](.github/images/tailwind-icon.png)</a>
@@ -43,7 +43,7 @@ On the folder run
 
 ## ✍️ Admin dashboard
 
-You can access the admin dashboard for editing blog post at `/keystatic` 
+You can access the admin dashboard for editing blog post at `/keystatic`
 
 For more information follow Keystatic documentation at [https://keystatic.com/docs/introduction](https://keystatic.com/docs/introduction)
 
@@ -51,3 +51,4 @@ For more information follow Keystatic documentation at [https://keystatic.com/do
 ---
 
 <p align="right"><a href="https://majestico.co" target="_blank">majestico.co</p>
+# kiwipbc.com
