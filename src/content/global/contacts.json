@@ -1,21 +1,22 @@
 {
-	"phone": "+1 1234567890",
-	"mail": "info@yourcompany.com",
+	"phone": "+64273388500",
+	"mail": "hello@kiwipbc.com",
+	"address": "Auckland, New Zealand",
 	"socials": [
 		{
-			"title": "Facebook",
-			"link": "https://facebook.com",
-			"icon": "ic:baseline-facebook"
+			"title": "WhatsApp",
+			"link": "https://wa.me/64273388500",
+			"icon": "mdi:whatsapp"
 		},
 		{
-			"title": "Instagram",
-			"link": "https://www.instagram.com/",
-			"icon": "mdi:instagram"
+			"title": "Telegram",
+			"link": "https://t.me/kiwipbc",
+			"icon": "mdi:telegram"
 		},
 		{
-			"title": "Youtube",
-			"link": "https://www.youtube.com/",
-			"icon": "mdi:youtube"
+			"title": "LinkedIn",
+			"link": "https://linkedin.com/company/kiwipbc",
+			"icon": "mdi:linkedin"
 		}
 	]
 }

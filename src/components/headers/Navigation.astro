@@ -1,19 +1,10 @@
 ---
 import { Image } from "astro:assets";
 import { getLocalizedSettings } from "@/lib/localization-helpers";
-import { translatePath, unlocalizedUrl } from "@/lib/localization-helpers";
-import { defaultLocale, locales } from "site";
+import { translatePath } from "@/lib/localization-helpers";
+import { defaultLocale } from "site";
 
 const currentLocale = Astro.currentLocale;
-
-function getTranslatedUrl(locale: string): string {
-	const unlocalizedPath = unlocalizedUrl(Astro.url.pathname);
-	return translatePath(locale, unlocalizedPath);
-}
-
-function isActiveLocale(locale: string): boolean {
-	return locale === currentLocale;
-}
 
 const { header, contacts } = getLocalizedSettings(currentLocale);
 
@@ -96,9 +87,6 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 	}
 	[data-nav-border-reveal] {
 		--tw-border-opacity: 0;
-	}
-	.active-locale {
-		font-weight: bolder;
 	}
 </style>
 
@@ -290,26 +278,6 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 						</a>
 					))
 				}
-				<div class="flex gap-8 pt-10 pl-16 md:pl-0">
-					{
-						locales.map((locale) => (
-							<a
-								href={getTranslatedUrl(locale)}
-								class:list={[
-									"items-center justify-start flex overflow-hidden gap-4 relative cursor-pointer",
-									isActiveLocale(locale) && "active-locale",
-								]}
-							>
-								<span
-									data-nav-text-reveal
-									class="overflow-hidden text-md xs:text-lg md:text-xl !leading-[1.15] text-black"
-								>
-									<span>{locale}</span>
-								</span>
-							</a>
-						))
-					}
-				</div>
 			</div>
 		</div>
 	</nav>

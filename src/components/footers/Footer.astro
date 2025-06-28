@@ -4,20 +4,11 @@ import Container from "@/components/primitives/Container.astro";
 import Link from "@/components/primitives/Link.astro";
 import { getLocalizedSettings } from "@/lib/localization-helpers";
 import { translatePath, unlocalizedUrl } from "@/lib/localization-helpers";
-import { defaultLocale, locales } from "site";
+import { defaultLocale } from "site";
 
 const currentLocale = Astro.currentLocale;
 
 const { footer, contacts } = getLocalizedSettings(currentLocale);
-
-function getTranslatedUrl(locale: string): string {
-	const unlocalizedPath = unlocalizedUrl(Astro.url.pathname);
-	return translatePath(locale, unlocalizedPath);
-}
-
-function isActiveLocale(locale: string): boolean {
-	return locale === currentLocale;
-}
 
 const pages = await getCollection("pages");
 const services = await getCollection("services");
@@ -40,7 +31,7 @@ const topInfoPages = pages
 	.slice(0, 6);
 
 const topServices = services
-	.map((page) => {
+	.map((page: any) => {
 		const [lang, ...slug] = page.slug.split("/");
 		return {
 			...page,
@@ -55,7 +46,7 @@ const topServices = services
 	.slice(0, 6);
 
 const lastPosts = posts
-	.map((page) => {
+	.map((page: any) => {
 		const [lang, ...slug] = page.slug.split("/");
 		return {
 			...page,
@@ -123,7 +114,7 @@ const lastPosts = posts
 									<p
 										class="text-white border-b-2 text-lg pb-1 mb-3 border-white border-solid"
 									>
-										Collegamenti utili
+										Useful Links
 									</p>
 									<ul
 										class="text-white/[0.65] mb-3 list-none"
@@ -210,6 +201,24 @@ const lastPosts = posts
 							>
 								{contacts.mail}
 							</a>
+							{contacts.address && (
+								<p class="border-b-2 pb-1 mb-3 border-white border-solid">
+									{contacts.address}
+								</p>
+							)}
+							<div class="flex gap-3 mt-4">
+								{contacts.socials?.map((social) => (
+									<a
+										href={social.link}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="text-white hover:text-blue-400 transition-colors"
+										title={social.title}
+									>
+										<span class="text-lg">{social.title}</span>
+									</a>
+								))}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -219,25 +228,6 @@ const lastPosts = posts
 					<p class="text-white/[0.78] text-base">
 						{footer.copyright}
 					</p>
-					<div class="flex gap-4">
-						{
-							locales.map((locale) => (
-								<a
-									href={getTranslatedUrl(locale)}
-									class:list={[
-										"items-center justify-start flex overflow-hidden gap-4 relative cursor-pointer",
-										isActiveLocale(locale)
-											? "bg-white text-black px-2 py-1 rounded-md"
-											: "text-white",
-									]}
-								>
-									<span class="overflow-hidden text-md xs:text-lg md:text-xl">
-										<span>{locale}</span>
-									</span>
-								</a>
-							))
-						}
-					</div>
 					<div class="flex gap-5 text-lg text-blue-700">
 						<a href="/privacy" class="inline-block max-w-full"
 							><p
