@@ -15,7 +15,9 @@ const { class: className } = Astro.props;
 		Your browser does not support the video tag.
 	</video>
 	<div id="blob-cursor-follower" class="follower">
-		<Icon name="mdi:play-circle" size={100} />
+		<a href="/contact">
+			<Icon name="mdi:play-circle" size={100} />
+		</a>
 	</div>
 	<slot />
 </div>
@@ -32,11 +34,12 @@ const { class: className } = Astro.props;
 		display: block;
 	}
 	.follower {
-		pointer-events: none;
+		/* pointer-events: none; */
 		width: 50px;
 		height: 50px;
 		border-radius: 50px;
 		position: absolute;
+		cursor: pointer;
 	}
 	.follower > svg {
 		position: absolute;
@@ -322,12 +325,12 @@ const { class: className } = Astro.props;
 	function openFullscreen(element: HTMLElement) {
 		if (element.requestFullscreen) {
 			element.requestFullscreen();
-		} else if (element.mozRequestFullScreen) {
-			element.mozRequestFullScreen();
-		} else if (element.webkitRequestFullscreen) {
-			element.webkitRequestFullscreen();
-		} else if (element.msRequestFullscreen) {
-			element.msRequestFullscreen();
+		} else if ((element as any).mozRequestFullScreen) {
+			(element as any).mozRequestFullScreen();
+		} else if ((element as any).webkitRequestFullscreen) {
+			(element as any).webkitRequestFullscreen();
+		} else if ((element as any).msRequestFullscreen) {
+			(element as any).msRequestFullscreen();
 		}
 	}
 
@@ -376,7 +379,7 @@ const { class: className } = Astro.props;
 						strength.x * strength.x + strength.y * strength.y,
 					) * 10;
 				if (strengthValue > 15) strengthValue = 15;
-				nearestPoint.acceleration =
+				(nearestPoint as Point).acceleration =
 					(strengthValue / 100) * (hover ? -1 : 1);
 			}
 		}
