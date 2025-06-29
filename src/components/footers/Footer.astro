@@ -12,7 +12,6 @@ const { footer, contacts } = getLocalizedSettings(currentLocale);
 
 const pages = await getCollection("pages");
 const services = await getCollection("services");
-const posts = await getCollection("posts");
 
 // get top 6 pages which are informational pages
 const topInfoPages = pages
@@ -26,7 +25,10 @@ const topInfoPages = pages
 	})
 	.filter(
 		(page) =>
-			page.lang === currentLocale && page.data.type === "informational",
+			page.lang === currentLocale &&
+			page.data.type === "informational" &&
+			!page.slug.includes("homepage") &&
+			!page.data.title?.includes("Projects & Platforms")
 	)
 	.slice(0, 6);
 
@@ -45,25 +47,18 @@ const topServices = services
 	.filter((page) => page.lang === currentLocale)
 	.slice(0, 6);
 
-const lastPosts = posts
-	.map((page: any) => {
-		const [lang, ...slug] = page.slug.split("/");
-		return {
-			...page,
-			lang: lang,
-			slug: translatePath(
-				lang,
-				`/post${unlocalizedUrl(`/${page.slug}`)}`,
-			),
-		};
-	})
-	.filter((page) => page.lang === currentLocale)
-	.sort(
-		(a, b) =>
-			new Date(b.data.lastUpdateDate).getTime() -
-			new Date(a.data.lastUpdateDate).getTime(),
-	)
-	.slice(0, 5);
+// Add additional useful links
+const additionalLinks = [
+	{ title: "Investment", slug: "/investment" },
+	{ title: "Recruitment", slug: "/recruitment" }
+];
+
+// Add specific partner links
+const partnerLinks = [
+	{ title: "Bitregalo", slug: "/bitregalo" },
+	{ title: "Build14", slug: "/build14" },
+	{ title: "QSME", slug: "/qsme" }
+];
 ---
 
 <div
@@ -91,7 +86,7 @@ const lastPosts = posts
 				</div>
 			</div>
 			<div
-				class="auto-cols-fr grid-cols-1 lg:grid-cols-[1.8fr_.4fr_1fr] grid-rows-[auto] grid mt-16 gap-10"
+				class="auto-cols-fr grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] grid-rows-[auto] grid mt-16 gap-10"
 			>
 				<div class="col-span-1 row-span-1">
 					<div
@@ -105,7 +100,7 @@ const lastPosts = posts
 					</div>
 					<div class="mt-10">
 						<div
-							class="auto-cols-fr grid-cols-[1fr_1fr_1fr] grid-rows-[auto] grid gap-[1.88rem]"
+							class="auto-cols-fr grid-cols-[1fr_1fr] grid-rows-[auto] grid gap-[1.88rem]"
 						>
 							<div class="col-span-1 row-span-1">
 								<div
@@ -122,13 +117,22 @@ const lastPosts = posts
 										{
 											topInfoPages.map(
 												({ data: { title }, slug }) => (
-													<li>
-														<a href={slug}>
+													<li class="mb-2">
+														<a href={slug} class="hover:text-white transition-colors">
 															{title}
 														</a>
 													</li>
 												),
 											)
+										}
+										{
+											additionalLinks.map(({ title, slug }) => (
+												<li class="mb-2">
+													<a href={slug} class="hover:text-white transition-colors">
+														{title}
+													</a>
+												</li>
+											))
 										}
 									</ul>
 								</div>
@@ -139,37 +143,24 @@ const lastPosts = posts
 								<p
 									class="text-white border-b-2 text-lg pb-1 mb-3 border-white border-solid"
 								>
-									Services
+									Partners
 								</p>
 								<ul class="text-white/[0.65] mb-3 list-none">
 									{
 										topServices.map(
 											({ data: { title }, slug }) => (
-												<li>
-													<a href={slug}>{title}</a>
+												<li class="mb-2">
+													<a href={slug} class="hover:text-white transition-colors">{title}</a>
 												</li>
 											),
 										)
 									}
-								</ul>
-							</div>
-							<div
-								class="items-start flex-col flex gap-[0.63rem]"
-							>
-								<p
-									class="text-white border-b-2 text-lg pb-1 mb-3 border-white border-solid"
-								>
-									Latest posts
-								</p>
-								<ul class="text-white/[0.65] mb-3 list-none">
 									{
-										lastPosts.map(
-											({ data: { title }, slug }) => (
-												<li>
-													<a href={slug}>{title}</a>
-												</li>
-											),
-										)
+										partnerLinks.map(({ title, slug }) => (
+											<li class="mb-2">
+												<a href={slug} class="hover:text-white transition-colors">{title}</a>
+											</li>
+										))
 									}
 								</ul>
 							</div>
@@ -190,13 +181,13 @@ const lastPosts = posts
 					<div class="mt-10 text-lg">
 						<div class="items-start flex-col flex">
 							<a
-								class="border-b-2 pb-1 mb-3 border-white border-solid"
+								class="border-b-2 pb-1 mb-3 border-white border-solid hover:text-blue-400 transition-colors"
 								href={`tel:${contacts.phone}`}
 							>
 								{contacts.phone}
 							</a>
 							<a
-								class="border-b-2 pb-1 mb-3 border-white border-solid"
+								class="border-b-2 pb-1 mb-3 border-white border-solid hover:text-blue-400 transition-colors"
 								href={`mailto:${contacts.mail}`}
 							>
 								{contacts.mail}
@@ -231,13 +222,13 @@ const lastPosts = posts
 					<div class="flex gap-5 text-lg text-blue-700">
 						<a href="/privacy" class="inline-block max-w-full"
 							><p
-								class="text-white border-b-2 cursor-pointer pb-1 border-white border-solid"
+								class="text-white border-b-2 cursor-pointer pb-1 border-white border-solid hover:text-blue-400 transition-colors"
 							>
 								Privacy policy
 							</p></a
 						><a href="/terms" class="inline-block max-w-full"
 							><p
-								class="text-white border-b-2 cursor-pointer pb-1 border-white border-solid"
+								class="text-white border-b-2 cursor-pointer pb-1 border-white border-solid hover:text-blue-400 transition-colors"
 							>
 								Terms
 							</p></a
