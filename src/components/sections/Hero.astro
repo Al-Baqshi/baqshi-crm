@@ -46,7 +46,7 @@ const { title, subtitle, buttons = defaultButtons } = Astro.props;
 								class="text-3xl font-semibold mb-3"
 								set:html={subtitle}
 							/>
-							<div class="mt-10 text-white">
+							<div class="mt-10 text-white flex flex-col gap-3">
 								{
 									buttons.map(
 										({ title, href, style, icon }) => (
