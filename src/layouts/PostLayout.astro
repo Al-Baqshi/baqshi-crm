@@ -6,36 +6,16 @@ import Link from "@/components/primitives/Link.astro";
 import Prose from "@/components/primitives/Prose.astro";
 import Share from "@/components/primitives/Share.astro";
 import Title from "@/components/primitives/Title.astro";
-import { defaultLocale } from "site";
 import BaseLayout from "./BaseLayout.astro";
 
 type Props = {
 	frontmatter: CollectionEntry<"posts">;
 };
 
-const currentLocale = Astro.currentLocale;
-
-interface PostLayoutLocale {
-	writtenBy: string;
-	writtenAt: string;
-}
-
-interface ComponentLocales {
-	[key: string]: PostLayoutLocale;
-}
-
-const componentLocales: ComponentLocales = {
-	it: {
-		writtenBy: "Scritto da: ",
-		writtenAt: "nel",
-	},
-	en: {
-		writtenBy: "Written by: ",
-		writtenAt: "on",
-	},
+const l = {
+	writtenBy: "Written by: ",
+	writtenAt: "on",
 };
-
-const l = componentLocales[currentLocale ?? defaultLocale];
 
 const { frontmatter } = Astro.props;
 ---

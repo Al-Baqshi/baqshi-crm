@@ -4,8 +4,6 @@ import type { ButtonProps } from "@/components/primitives/Button.astro";
 import Link from "@/components/primitives/Link.astro";
 import WorkPreview from "@/components/sections/WorkPreview.astro";
 
-const currentLocale = Astro.currentLocale;
-
 const works = await getCollection("works");
 
 const allWorks = works
@@ -16,7 +14,6 @@ const allWorks = works
 			lang: lang,
 		};
 	})
-	.filter((page) => page.lang === currentLocale)
 	.sort(
 		(a, b) =>
 			a.data.lastUpdateDate.getTime() - b.data.lastUpdateDate.getTime(),

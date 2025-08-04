@@ -2,11 +2,7 @@
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import Link from "@/components/primitives/Link.astro";
-import { translatePath, unlocalizedUrl } from "@/lib/localization-helpers";
 import { Icon } from "astro-icon/components";
-import { defaultLocale } from "site";
-
-const currentLocale = Astro.currentLocale;
 
 interface Props {
 	post: CollectionEntry<"posts">;
@@ -14,11 +10,8 @@ interface Props {
 
 const { post } = Astro.props;
 
-const unlocalizedPath = unlocalizedUrl(post.slug);
-const localizedPath = translatePath(
-	currentLocale ?? defaultLocale,
-	`/post${unlocalizedPath}`,
-);
+const [lang, ...slug] = post.slug.split("/");
+const localizedPath = `/post/${slug.join("/")}`;
 ---
 
 <div>
