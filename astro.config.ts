@@ -9,7 +9,7 @@ import AstroPWA from "@vite-pwa/astro";
 import icon from "astro-icon";
 import robotsTxt from "astro-robots-txt";
 import { defineConfig } from "astro/config";
-import { defaultLocale, locales, siteTitle, siteUrl } from "./site.config";
+import { siteTitle, siteUrl } from "./site.config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -22,13 +22,6 @@ export default defineConfig({
 		},
 	}),
 	compressHTML: true,
-	i18n: {
-		defaultLocale: defaultLocale,
-		locales: locales,
-		routing: {
-			prefixDefaultLocale: false,
-		},
-	},
 	redirects: {
 		"/admin": "/keystatic",
 	},

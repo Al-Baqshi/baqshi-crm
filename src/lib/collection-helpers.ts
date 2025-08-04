@@ -1,9 +1,7 @@
 import { type ContentEntryMap, getCollection } from "astro:content";
-import { type Locale, defaultLocale } from "site.config";
 
 export async function getCollectionStaticPaths<CollectionName extends keyof ContentEntryMap>(
 	collectionName: CollectionName,
-	locale?: Locale,
 ): Promise<PathParams<CollectionName>[]> {
 	const collection = await getCollection(collectionName);
 
@@ -12,22 +10,20 @@ export async function getCollectionStaticPaths<CollectionName extends keyof Cont
 	});
 
 	const paths = visibleItems.map((item) => {
-		const [lang, ...slug] = item.slug.split("/");
-		let localizedSlug = slug;
+		// Remove the locale prefix (en/) from the slug
+		const slugParts = item.slug.split("/");
+		const localizedSlug = slugParts.slice(1); // Remove the first part (en)
+
+		let finalSlug = localizedSlug;
 
 		if (collectionName === "pages") {
 			// For pages handle homepage slug
-			localizedSlug = slug[0] === "homepage" || slug[0] === "index" ? [] : slug;
-		}
-
-		if (lang !== defaultLocale && !locale) {
-			localizedSlug = [lang, ...localizedSlug];
+			finalSlug = localizedSlug[0] === "homepage" || localizedSlug[0] === "index" ? [] : localizedSlug;
 		}
 
 		return {
 			params: {
-				lang,
-				slug: localizedSlug.join("/") || undefined,
+				slug: finalSlug.join("/") || undefined,
 			},
 			props: {
 				data: item,
@@ -35,10 +31,5 @@ export async function getCollectionStaticPaths<CollectionName extends keyof Cont
 		};
 	});
 
-	let pathsRes = paths;
-	if (locale) {
-		pathsRes = paths.filter((path) => path.params.lang === locale);
-	}
-
-	return pathsRes;
+	return paths;
 }

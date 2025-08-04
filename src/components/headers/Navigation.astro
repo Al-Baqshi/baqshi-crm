@@ -1,21 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import { getLocalizedSettings } from "@/lib/localization-helpers";
-import { translatePath, unlocalizedUrl } from "@/lib/localization-helpers";
-import { defaultLocale, locales } from "site";
 
-const currentLocale = Astro.currentLocale;
-
-function getTranslatedUrl(locale: string): string {
-	const unlocalizedPath = unlocalizedUrl(Astro.url.pathname);
-	return translatePath(locale, unlocalizedPath);
-}
-
-function isActiveLocale(locale: string): boolean {
-	return locale === currentLocale;
-}
-
-const { header, contacts } = getLocalizedSettings(currentLocale);
+const { header, contacts } = getLocalizedSettings();
 
 const logoPath = header.logo?.imagePath;
 
@@ -126,7 +113,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 			class="items-center flex-wrap justify-start relative flex text-blue-700 z-20"
 		>
 			<a
-				href={translatePath(currentLocale ?? defaultLocale, "/")}
+				href="/"
 				id="header-logo"
 				class="text-blue-700 justify-self-start lg:justify-self-center underline inline-block max-w-full"
 			>
@@ -150,7 +137,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 			<a
 				data-company-name
 				class="pb-4 group"
-				href={translatePath(currentLocale ?? defaultLocale, "/")}
+				href="/"
 			>
 				<div
 					class="w-20 h-1 bg-slate-200 rounded-full group-hover:bg-slate-600 transition-colors duration-500"
@@ -193,10 +180,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 					header.pages.map((page, index) => (
 						<a
 							data-nav-item
-							href={translatePath(
-								currentLocale ?? defaultLocale,
-								page.link,
-							)}
+							href={page.link}
 							class="items-center justify-start flex overflow-hidden gap-4 relative pr-10"
 						>
 							<div
@@ -215,26 +199,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 						</a>
 					))
 				}
-				<div class="flex gap-8 pt-10 pl-16 md:pl-0">
-					{
-						locales.map((locale) => (
-							<a
-								href={getTranslatedUrl(locale)}
-								class:list={[
-									"items-center justify-start flex overflow-hidden gap-4 relative cursor-pointer",
-									isActiveLocale(locale) && "active-locale",
-								]}
-							>
-								<span
-									data-nav-text-reveal
-									class="overflow-hidden text-md xs:text-lg md:text-xl !leading-[1.15] text-black"
-								>
-									<span>{locale}</span>
-								</span>
-							</a>
-						))
-					}
-				</div>
+
 			</div>
 		</div>
 	</nav>

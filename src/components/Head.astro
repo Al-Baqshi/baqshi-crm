@@ -9,9 +9,7 @@ type Props = {
 	seo?: SEOProps | MinimalSeo;
 };
 
-const currentLocale = Astro.currentLocale;
-
-const { seo: defaultSeo, style } = getLocalizedSettings(currentLocale);
+const { seo: defaultSeo, style } = getLocalizedSettings();
 
 const { seo: seoProp } = Astro.props;
 

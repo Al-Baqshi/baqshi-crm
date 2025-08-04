@@ -1,5 +1,5 @@
-export const siteUrl = "https://mizar.majestico.co";
-export const siteTitle = "Mizar";
-export const defaultLocale = "en";
-export const locales = ["en"];
-export type Locale = "en";
+export const siteUrl = "https://kiwipbc.co.nz";
+export const siteTitle = "Kiwipbc";
+export const defaultLocale = "";
+export const locales = [""];
+export type Locale = "";

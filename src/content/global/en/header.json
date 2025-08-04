@@ -14,10 +14,6 @@
 		{
 			"title": "Works",
 			"link": "/works"
-		},
-		{
-			"title": "Contacts",
-			"link": "/contact"
 		}
 	],
 	"actions": []

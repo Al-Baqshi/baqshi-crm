@@ -127,7 +127,7 @@ export default defineMarkdocConfig({
 		Contact: {
 			attributes: {
 				title: { type: String, render: "title", required: true },
-				fields: { type: Array, render: "fields", required: true },
+				fields: { type: Array, render: "fields", required: false },
 			},
 			render: component("./src/components/sections/Contact.astro"),
 		},

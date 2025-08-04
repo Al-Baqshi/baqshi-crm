@@ -2,9 +2,7 @@
 import { getLocalizedSettings } from "@/lib/localization-helpers";
 import { Icon } from "astro-icon/components";
 
-const currentLocale = Astro.currentLocale;
-
-const { widget } = getLocalizedSettings(currentLocale);
+const { widget } = getLocalizedSettings();
 ---
 
 <a

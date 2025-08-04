@@ -9,9 +9,7 @@ import Widget from "@/components/primitives/Widget.astro";
 import { getLocalizedSettings } from "@/lib/localization-helpers";
 import type { SEOProps } from "astro-seo";
 
-const currentLocale = Astro.currentLocale;
-
-const { widget } = getLocalizedSettings(currentLocale);
+const { widget } = getLocalizedSettings();
 
 type Props = {
 	seo?: SEOProps | MinimalSeo;
