@@ -51,4 +51,5 @@ For more information follow Keystatic documentation at [https://keystatic.com/do
 ---
 
 <p align="right"><a href="https://majestico.co" target="_blank">majestico.co</p>
-# kiwipbc.com
+# BaQshi.com
+# baqshi-crm
