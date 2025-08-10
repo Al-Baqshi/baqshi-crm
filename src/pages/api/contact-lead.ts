@@ -13,7 +13,7 @@ export const POST: APIRoute = async ({ request }) => {
   };
 
   // PerfexCRM API endpoint and token
-  const PERFEX_API_URL = 'https://kiwipbc.co.nz/api/leads';
+  const PERFEX_API_URL = 'https://BaQshi.co.nz/api/leads';
   const PERFEX_API_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiY29udGFjdGZvcm1tYWlud2Vic2l0ZSIsIm5hbWUiOiJjcmVhdGVsZWFkZSIsIkFQSV9USU1FIjoxNzUxMTU1NTgzfQ.h2lnn8V9yn6Eqi4z32XODlbvH-KrcmxqIzlJc2h220o';
 
   const response = await fetch(PERFEX_API_URL, {

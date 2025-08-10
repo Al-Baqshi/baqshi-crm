@@ -74,7 +74,7 @@ const Template = (props: OgData) => (
 				style={{ position: "absolute", bottom: "10px", right: "10px", zIndex: 100 }}
 				width={24}
 				height={24}
-				alt="Logo"
+				alt="Baqshi Logo"
 			/>
 		) : (
 			<span style={{ position: "absolute", bottom: "20px", right: "20px", zIndex: 100 }}>{props.author}</span>
@@ -89,7 +89,7 @@ const Template = (props: OgData) => (
  */
 const generateOgImage = async (
 	text: string = siteTitle,
-	author = "Your Company",
+	author = "Baqshi",
 	date: Date = new Date(),
 	cover?: string,
 	logo?: string,

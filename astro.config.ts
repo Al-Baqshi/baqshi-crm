@@ -1,10 +1,10 @@
 import alpinejs from "@astrojs/alpinejs";
-import cloudflare from "@astrojs/cloudflare";
+
 import markdoc from "@astrojs/markdoc";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
-import keystatic from "@keystatic/astro";
+
 import AstroPWA from "@vite-pwa/astro";
 import icon from "astro-icon";
 import robotsTxt from "astro-robots-txt";
@@ -14,13 +14,7 @@ import { siteTitle, siteUrl } from "./site.config";
 // https://astro.build/config
 export default defineConfig({
 	site: siteUrl,
-	output: "hybrid",
-	adapter: cloudflare({
-		imageService: "compile",
-		experimental: {
-			manualChunks: ["sharp"],
-		},
-	}),
+	output: "static",
 	compressHTML: true,
 	redirects: {
 		"/admin": "/keystatic",
@@ -40,7 +34,7 @@ export default defineConfig({
 		icon(),
 		react(),
 		markdoc(),
-		keystatic(),
+
 		robotsTxt({
 			policy: [{ userAgent: "*", allow: "/" }],
 		}),
@@ -48,7 +42,7 @@ export default defineConfig({
 			mode: import.meta.env.PROD ? "production" : "development",
 			base: "/",
 			scope: "/",
-			includeAssets: ["favicon.svg"],
+			includeAssets: ["favicon.png"],
 			registerType: "autoUpdate",
 			injectRegister: false,
 			manifest: {

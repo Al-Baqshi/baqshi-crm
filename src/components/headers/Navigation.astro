@@ -81,6 +81,10 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 	#navigation {
 		pointer-events: none;
 	}
+	#navigation-background {
+		background-color: rgba(0, 0, 0, 0.95);
+		backdrop-filter: blur(10px);
+	}
 	[data-nav-border-reveal] {
 		--tw-border-opacity: 0;
 	}
@@ -110,25 +114,20 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 		class="items-center auto-cols-fr grid-cols-2 lg:grid-cols-2 grid-rows-[auto] justify-between left-0 py-3.5 px-6 lg:px-20 right-0 top-0 grid gap-4"
 	>
 		<div
-			class="items-center flex-wrap justify-start relative flex text-blue-700 z-20"
+			class="items-center flex-wrap justify-start relative flex text-black z-20"
 		>
 			<a
 				href="/"
 				id="header-logo"
-				class="text-blue-700 justify-self-start lg:justify-self-center underline inline-block max-w-full"
+				class="text-black justify-self-start lg:justify-self-center underline inline-block max-w-full transition-opacity duration-300"
 			>
-				<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250" width="60" height="60">
-					<title>light-logo</title>
-					<style>
-						.s0 { fill: #000000 }
-						.s1 { fill: #eb8020 }
-					</style>
-					<path class="s0 logo-path-mask" d="m36.3 152.1c5.9-22.7 16.7-42.6 34.9-57.7q15.2-12.8 34.9-15.9c9.7-1.5 18.1 1.5 25.3 7.7 3.7 3.3 7.8 4.6 12.5 4.3 12.1-1 24.2-2.2 36.4-3.4 13.5-1.3 27.6-1.3 41.3-0.3-15.3-38.3-52.6-65.4-96.4-65.4-57.3 0-103.7 46.5-103.7 103.8 0 17.9 4.6 34.8 12.6 49.5-0.5-7.2 0.2-14.9 2.2-22.6z"/>
-					<path class="s0 logo-path-mask" d="m229 125.2c0-13.2-2.5-25.8-7-37.4-0.2 0-0.5 0-0.8 0.1q-21.3 3.9-42.6 7.9c-5.9 1.1-11.9 2.4-17.9 3.5-5.6 1-11.7 1.5-16.5 5.1-3.8 2.9-5.6 7.2-7.7 11.4-2.2 4.4-4.9 8.4-7.8 12.4-3.1 4.4-8.7 9.8-8 15.7 1 9.5 14.7 13.9 21.7 17.6 14.8 8 22.8 21.3 17.1 38.2-4.6 13.7-13 23.6-25.9 28.9 53.4-4.3 95.4-48.9 95.4-103.4z"/>
-					<path class="s1" d="m119.9 98.8c0 4.8-3.9 8.7-8.7 8.7-4.8 0-8.8-3.9-8.8-8.7 0-4.8 4-8.8 8.8-8.8 4.8 0 8.7 4 8.7 8.8z"/>
-					<path class="s0 logo-path-mask" fill-rule="evenodd" d="m111.2 109.3c-5.8 0-10.5-4.7-10.5-10.5 0-5.8 4.7-10.6 10.5-10.6 5.8 0 10.5 4.8 10.5 10.6 0 5.8-4.7 10.5-10.5 10.5zm0-17.5c-3.8 0-7 3.1-7 7 0 3.8 3.2 6.9 7 6.9 3.8 0 7-3.1 7-6.9 0-3.9-3.2-7-7-7z"/>
-					<path class="s0 logo-path-mask" d="m104.2 122.5h-3.5v-47.4h3.5z"/>
-				</svg>
+				<img
+					src={logoPath}
+					alt="BaQshi Logo"
+					width="200"
+					height="60"
+					class="h-12 w-auto transition-all duration-300 hover:scale-105"
+				/>
 			</a>
 		</div>
 		<div
@@ -140,7 +139,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 				href="/"
 			>
 				<div
-					class="w-20 h-1 bg-slate-200 rounded-full group-hover:bg-slate-600 transition-colors duration-500"
+					class="w-20 h-1 bg-black rounded-full group-hover:bg-gray-800 transition-colors duration-500"
 				>
 				</div>
 			</a>
@@ -169,12 +168,19 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 	>
 		<div
 			id="navigation-background"
-			class="bg-white w-full h-full absolute top-0 left-0 opacity-0"
+			class="bg-black w-full h-full absolute top-0 left-0 opacity-0 transition-opacity duration-500"
 		>
 		</div>
 		<div
-			class="items-center font-semibold flex-wrap justify-center flex flex-col overflow-hidden z-20 w-full"
+			class="items-center font-semibold flex-wrap justify-center flex flex-col overflow-hidden z-20 w-full relative"
 		>
+			<button
+				id="close-nav"
+				class="absolute top-8 right-8 text-white text-4xl font-bold hover:text-gray-300 transition-colors duration-200 z-30"
+				aria-label="Close navigation"
+			>
+				×
+			</button>
 			<div class="flex flex-col items-start md:items-center pt-10">
 				{
 					header.pages.map((page, index) => (
@@ -186,13 +192,13 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 							<div
 								data-nav-border-reveal
 								data-nav-text-reveal
-								class="text-black items-center cursor-pointer justify-center pt-1 flex w-9 h-9 border-2 border-black border-solid rounded-full"
+								class="text-white items-center cursor-pointer justify-center pt-1 flex w-9 h-9 border-2 border-white border-solid rounded-full"
 							>
 								0{index + 1}
 							</div>
 							<div
 								data-nav-text-reveal
-								class="cursor-pointer overflow-hidden text-4xl xs:text-5xl md:text-[5.63rem] !leading-[1.15] text-black"
+								class="cursor-pointer overflow-hidden text-4xl xs:text-5xl md:text-[5.63rem] !leading-[1.15] text-white"
 							>
 								{page.title}
 							</div>
@@ -200,6 +206,31 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 					))
 				}
 
+				{header.actions && header.actions.length > 0 && (
+					<div class="flex flex-col items-start md:items-center mt-8 gap-4">
+						{header.actions.map((action, index) => (
+							<a
+								data-nav-item
+								href={action.link}
+								class="items-center justify-start flex overflow-hidden gap-4 relative pr-10"
+							>
+								<div
+									data-nav-border-reveal
+									data-nav-text-reveal
+									class="text-white items-center cursor-pointer justify-center pt-1 flex w-9 h-9 border-2 border-white border-solid rounded-full"
+								>
+									{index + header.pages.length + 1}
+								</div>
+								<div
+									data-nav-text-reveal
+									class="cursor-pointer overflow-hidden text-4xl xs:text-5xl md:text-[5.63rem] !leading-[1.15] text-white"
+								>
+									{action.title}
+								</div>
+							</a>
+						))}
+					</div>
+				)}
 			</div>
 		</div>
 	</nav>
@@ -236,9 +267,26 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 				},
 			})
 				.to("[data-company-name]", { opacity: 0 })
-				// .to("header .logo-path-mask", { drawSVG: 0 }, "<")
-				.to("header .logo-path-mask", { opacity: 0 }, "<")
+				.to("#header-logo", {
+					opacity: 0,
+					y: -20,
+					scale: 0.8,
+					rotation: -5
+				}, "<")
 				.set("#header-logo", { pointerEvents: "none" });
+
+			// Add scroll-triggered text wave animation
+			gsap.timeline({
+				scrollTrigger: {
+					trigger: "body",
+					start: "10px",
+					end: "40px",
+					scrub: 1,
+				},
+			})
+				.to(".logo-text", {
+					css: { animation: "textWave 1.5s ease-in-out infinite" }
+				});
 
 			const tl = gsap.timeline({
 				paused: true,
@@ -258,7 +306,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 			// });
 
 			tl.set("#navigation", { pointerEvents: "auto" })
-				.to("#navigation-background", { opacity: 1 }, "<")
+				.to("#navigation-background", { opacity: 1, duration: 0.3 }, "<")
 				.to(
 					"[data-nav-text-reveal]",
 					{ opacity: 1, duration: 0.5, ease: "none" },
@@ -301,12 +349,29 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 
 			// Get the checkbox
 			const menuToggle = document.getElementById("menu-toggle");
+			const closeNav = document.getElementById("close-nav");
 
 			// Add an event listener to the checkbox
 			menuToggle?.addEventListener("change", function () {
 				if ((this as HTMLInputElement).checked) {
 					tl.play();
 				} else {
+					tl.reverse();
+				}
+			});
+
+			// Add close button functionality
+			closeNav?.addEventListener("click", function () {
+				if (menuToggle) {
+					(menuToggle as HTMLInputElement).checked = false;
+					tl.reverse();
+				}
+			});
+
+			// Close menu when clicking on navigation background
+			document.getElementById("navigation-background")?.addEventListener("click", function () {
+				if (menuToggle) {
+					(menuToggle as HTMLInputElement).checked = false;
 					tl.reverse();
 				}
 			});

@@ -1,5 +1,8 @@
 ---
 import Button from "@/components/primitives/Button.astro";
+import { getLocalizedSettings } from "@/lib/localization-helpers";
+
+const { contacts } = getLocalizedSettings();
 
 type HTMLInputTypeAttribute =
 	| "button"
@@ -44,144 +47,18 @@ const { title, fields = [] } = Astro.props;
 ---
 
 <div class="items-center gap-x-[6.25rem] pb-40 auto-cols-fr justify-center flex">
-	<div class="col-span-1 row-span-1 w-full max-w-3xl">
-		<div class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl p-8 border border-blue-200 dark:border-gray-700">
-			<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">{title}</h2>
-			<p class="text-gray-600 dark:text-gray-300 text-center mb-8">Fill out the form below and we'll get back to you within 24 hours.</p>
-
-			<form id="contactForm" class="space-y-6">
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<div>
-						<label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name *</label>
-						<input
-							type="text"
-							id="name"
-							name="name"
-							required
-							class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
-							placeholder="John Doe"
-						/>
-					</div>
-
-					<div>
-						<label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email *</label>
-						<input
-							type="email"
-							id="email"
-							name="email"
-							required
-							class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
-							placeholder="contact@email.com"
-						/>
-					</div>
-				</div>
-
-				<div>
-					<label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone Number</label>
-					<input
-						type="tel"
-						id="phone"
-						name="phone"
-						class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
-						placeholder="+64 27 338 8500"
-					/>
-				</div>
-
-				<div>
-					<label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
-					<textarea
-						id="message"
-						name="message"
-						rows="4"
-						class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
-						placeholder="Tell us about your project or inquiry..."
-					></textarea>
-				</div>
-
-				<div class="flex justify-center">
-					<button
-						type="submit"
-						class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-4 px-10 rounded-xl transition duration-300 ease-in-out transform hover:scale-105 shadow-lg hover:shadow-xl"
-					>
-						Send Message
-					</button>
-				</div>
-			</form>
-
-			<div id="successMessage" class="hidden mt-6 p-6 bg-green-50 border border-green-200 text-green-800 rounded-xl">
-				<div class="flex items-center">
-					<svg class="w-6 h-6 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-					</svg>
-					<div>
-						<h3 class="font-semibold">Message Sent Successfully!</h3>
-						<p class="text-sm mt-1">Thank you! We'll get back to you within 24 hours.</p>
-					</div>
-				</div>
-			</div>
-
-			<div id="errorMessage" class="hidden mt-6 p-6 bg-red-50 border border-red-200 text-red-800 rounded-xl">
-				<div class="flex items-center">
-					<svg class="w-6 h-6 mr-3 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-					</svg>
-					<div>
-						<h3 class="font-semibold">Oops! Something went wrong</h3>
-						<p class="text-sm mt-1">Please try again or contact us directly at +64 27 338 8500</p>
-					</div>
-				</div>
-			</div>
+	<div class="col-span-1 row-span-1 w-full max-w-4xl">
+		<div class="flex justify-center">
+			<iframe
+				width="600"
+				height="550"
+				src="https://baqshi.com/crm/forms/wtl/7172d5ddbff06c6454ef5eae3c8ac7f9"
+				frameborder="0"
+				sandbox="allow-top-navigation allow-forms allow-scripts allow-same-origin allow-popups"
+				allowfullscreen
+			></iframe>
 		</div>
 	</div>
 </div>
 
-<script>
-	const form = document.getElementById('contactForm') as HTMLFormElement;
-	const successMessage = document.getElementById('successMessage');
-	const errorMessage = document.getElementById('errorMessage');
 
-	if (form) {
-		form.addEventListener('submit', async function(e) {
-			e.preventDefault();
-
-			const formData = new FormData(this);
-			const data = {
-				'Full Name': formData.get('name'),
-				'Email': formData.get('email'),
-				'Phone': formData.get('phone'),
-				'Message': formData.get('message')
-			};
-
-			const submitButton = this.querySelector('button[type="submit"]') as HTMLButtonElement;
-			if (!submitButton) return;
-
-			const originalText = submitButton.textContent;
-			submitButton.textContent = 'Sending...';
-			submitButton.disabled = true;
-
-			try {
-				const response = await fetch('/api/contact-lead', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(data)
-				});
-
-				const result = await response.json();
-
-				if (result.success) {
-					if (successMessage) successMessage.classList.remove('hidden');
-					this.reset();
-				} else {
-					if (errorMessage) errorMessage.classList.remove('hidden');
-				}
-			} catch (error) {
-				if (errorMessage) errorMessage.classList.remove('hidden');
-			} finally {
-				submitButton.textContent = originalText;
-				submitButton.disabled = false;
-			}
-		});
-	}
-</script>
