@@ -56,5 +56,25 @@
 	"cSpell.diagnosticLevel": "Information",
 	"[astro]": {
 		"editor.defaultFormatter": "astro-build.astro-vscode"
-	}
+	},
+	"workbench.colorCustomizations": {
+		"activityBar.activeBackground": "#fafafa",
+		"activityBar.background": "#fafafa",
+		"activityBar.foreground": "#15202b",
+		"activityBar.inactiveForeground": "#15202b99",
+		"activityBarBadge.background": "#df9f9f",
+		"activityBarBadge.foreground": "#15202b",
+		"commandCenter.border": "#15202b99",
+		"sash.hoverBorder": "#fafafa",
+		"statusBar.background": "#e3dede",
+		"statusBar.foreground": "#15202b",
+		"statusBarItem.hoverBackground": "#ccc2c2",
+		"statusBarItem.remoteBackground": "#e3dede",
+		"statusBarItem.remoteForeground": "#15202b",
+		"titleBar.activeBackground": "#e3dede",
+		"titleBar.activeForeground": "#15202b",
+		"titleBar.inactiveBackground": "#e3dede99",
+		"titleBar.inactiveForeground": "#15202b99"
+	},
+	"peacock.color": "#E3DEDE"
 }

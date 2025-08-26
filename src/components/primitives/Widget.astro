@@ -21,7 +21,7 @@ const { widget } = getLocalizedSettings();
 </a>
 
 <script>
-	import gsap from "gsap";
+	import { gsap } from "gsap";
 
 	let ctx: gsap.Context | null = null;
 
@@ -29,20 +29,30 @@ const { widget } = getLocalizedSettings();
 		return document.getElementById("whatsapp-widget") !== null;
 	};
 
-	document.addEventListener(
-		"astro:page-load",
-		() => {
-			if (componentVisible()) {
-				// Initialize all animations and add all to the current gsap context
-				ctx = gsap.context(() => {
-					gsap.to("[data-widget-appear]", {
-						opacity: 1,
-						duration: 1,
-						ease: "none",
-					});
+	const initWidget = () => {
+		if (componentVisible()) {
+			// Initialize all animations and add all to the current gsap context
+			ctx = gsap.context(() => {
+				gsap.to("[data-widget-appear]", {
+					opacity: 1,
+					duration: 1,
+					ease: "none",
 				});
-			}
-		},
-		{ once: true },
-	);
+			});
+		}
+	};
+
+	// Initialize on page load
+	document.addEventListener("astro:page-load", initWidget, { once: true });
+
+	// Also initialize on DOMContentLoaded for static sites
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initWidget);
+	} else {
+		initWidget();
+	}
+
+	// Additional initialization for static hosting
+	document.addEventListener('static-site-ready', initWidget);
+	document.addEventListener('gsap-ready', initWidget);
 </script>

@@ -253,8 +253,15 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 
 	const lm = new LifecycleManager();
 
-	lm.onElementLoaded("navigation", (ctx) => {
-		ctx?.add(() => {
+	const initNavigation = () => {
+		if (!document.getElementById("navigation")) return;
+
+		lm.initializeContext();
+		const ctx = lm.ctx;
+
+		if (!ctx) return;
+
+		ctx.add(() => {
 			gsap.timeline({
 				defaults: {
 					ease: "power1.inOut",
@@ -376,5 +383,19 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 				}
 			});
 		});
-	});
+	};
+
+	// Initialize navigation
+	lm.onElementLoaded("navigation", initNavigation);
+
+	// Also initialize on DOMContentLoaded for static sites
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initNavigation);
+	} else {
+		initNavigation();
+	}
+
+	// Additional initialization for static hosting
+	document.addEventListener('static-site-ready', initNavigation);
+	document.addEventListener('gsap-ready', initNavigation);
 </script>

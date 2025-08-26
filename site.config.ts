@@ -1,4 +1,4 @@
-export const siteUrl = "https://BaQshi.co.nz";
+export const siteUrl = "https://your-vercel-domain.vercel.app"; // Update this with your actual Vercel domain
 export const siteTitle = "BaQshi";
 export const defaultLocale = "";
 export const locales = [""];

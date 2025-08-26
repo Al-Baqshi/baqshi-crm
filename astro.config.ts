@@ -19,10 +19,30 @@ export default defineConfig({
 	redirects: {
 		"/admin": "/keystatic",
 	},
+	build: {
+		inlineStylesheets: 'auto',
+	},
 	vite: {
 		define: {
 			__DATE__: `'${new Date().toISOString()}'`,
 		},
+		build: {
+			rollupOptions: {
+				output: {
+					assetFileNames: (assetInfo) => {
+						const info = assetInfo.name.split('.');
+						const extType = info[info.length - 1];
+						if (/\.(css)$/.test(assetInfo.name)) {
+							return `assets/css/[name]-[hash][extname]`;
+						}
+						if (/\.(js)$/.test(assetInfo.name)) {
+							return `assets/js/[name]-[hash][extname]`;
+						}
+						return `assets/[name]-[hash][extname]`;
+					},
+				}
+			}
+		}
 	},
 	integrations: [
 		alpinejs(),
@@ -48,25 +68,24 @@ export default defineConfig({
 			manifest: {
 				name: siteTitle,
 				short_name: siteTitle,
+				description: "BaQshi - Professional Web Services",
 				theme_color: "#ffffff",
+				background_color: "#ffffff",
+				display: "standalone",
+				scope: "/",
+				start_url: "/",
 			},
 			pwaAssets: {
 				config: true,
 			},
 			workbox: {
-				navigateFallback: "/",
 				globPatterns: ["**/*.{css,js,html,svg,png,ico,txt}"],
-				globIgnores: ["**/_worker.js/**/*", "_worker.js"],
-				navigateFallbackDenylist: [/^\/keystatic/, /^\/api/],
+				globIgnores: ["**/_worker.js/**/*", "_worker.js", "**/keystatic/**/*"],
 				skipWaiting: true,
-				maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
+				clientsClaim: true,
 			},
 			devOptions: {
 				enabled: false,
-				navigateFallbackAllowlist: [/^\//],
-			},
-			experimental: {
-				directoryAndTrailingSlashHandler: true,
 			},
 		}),
 	],

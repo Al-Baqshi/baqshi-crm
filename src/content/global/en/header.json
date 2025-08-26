@@ -17,7 +17,7 @@
 		},
 		{
 			"title": "Blog",
-			"link": "https://blog.baqshi.com"
+			"link": "https://baqshi.com"
 		},
 		{
 			"title": "Contact",
@@ -25,7 +25,7 @@
 		},
 		{
 			"title": "Log In",
-			"link": "/crm"
+			"link": "https://kiwipbc.com/crm"
 		}
 	],
 	"actions": []

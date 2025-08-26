@@ -85,6 +85,7 @@ const seo = {
 	{pwaAssetsHead.links.map((link) => <link {...link} />)}
 	{pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
 	<script src="/src/utils/pwa.ts"></script>
+	<script is:inline src="/static-fixes.js"></script>
 
 	<!-- PRECONNECT FONTS -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -99,7 +100,7 @@ const seo = {
 	<!-- LIBS -->
 	<script
 		defer
-		src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.13.5/dist/cdn.min.js"
+		src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.14.0/dist/cdn.min.js"
 	></script>
 	<script
 		defer

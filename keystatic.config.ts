@@ -27,14 +27,14 @@ export default config({
 	},
 	ui: {
 		brand: {
-			name: "Your Company",
+			name: "Baqshi",
 			mark: BrandMarkComponent,
 		},
 	},
 	singletons: {
 		header: singleton({
 			label: "Navigation",
-			path: "src/content/global/header",
+			path: "src/content/global/en/header",
 			format: { data: "json" },
 			schema: {
 				logo: fields.object({
@@ -116,7 +116,7 @@ export default config({
 		}),
 		footer: singleton({
 			label: "Footer",
-			path: "src/content/global/footer",
+			path: "src/content/global/en/footer",
 			format: { data: "json" },
 			schema: {
 				title: fields.text({ label: "Title" }),
@@ -144,12 +144,49 @@ export default config({
 				),
 			},
 		}),
+		seo: singleton({
+			label: "SEO Settings",
+			path: "src/content/global/en/seo",
+			format: { data: "json" },
+			schema: {
+				title: fields.text({ label: "Site Title" }),
+				description: fields.text({
+					label: "Site Description",
+					multiline: true
+				}),
+				author: fields.text({ label: "Default Author" }),
+			},
+		}),
+		contacts: singleton({
+			label: "Contact Information",
+			path: "src/content/global/contacts",
+			format: { data: "json" },
+			schema: {
+				phone: fields.text({ label: "Phone" }),
+				mail: fields.text({ label: "Email" }),
+				address: fields.text({ label: "Address" }),
+			},
+		}),
+		style: singleton({
+			label: "Style Settings",
+			path: "src/content/global/style",
+			format: { data: "json" },
+			schema: {
+				theme: fields.object({
+					colors: fields.object({
+						primary: fields.text({ label: "Primary Color" }),
+						secondary: fields.text({ label: "Secondary Color" }),
+						tileColor: fields.text({ label: "Tile Color" }),
+					}),
+				}),
+			},
+		}),
 	},
 	collections: {
 		pages: collection({
 			label: "Pages",
 			slugField: "title",
-			path: "src/content/pages/it/*",
+			path: "src/content/pages/en/*",
 			entryLayout: "content",
 			columns: ["title", "lastUpdateDate"],
 			previewUrl: "/{slug}",
@@ -634,7 +671,7 @@ export default config({
 		posts: collection({
 			label: "Posts",
 			slugField: "title",
-			path: "src/content/posts/it/*",
+			path: "src/content/posts/en/*",
 			entryLayout: "content",
 			columns: ["title", "lastUpdateDate"],
 			previewUrl: "/post/{slug}",
@@ -657,6 +694,12 @@ export default config({
 				description: fields.text({
 					label: "Description",
 					multiline: true,
+					validation: {
+						isRequired: true,
+					},
+				}),
+				category: fields.text({
+					label: "Category",
 					validation: {
 						isRequired: true,
 					},
@@ -717,7 +760,7 @@ export default config({
 		works: collection({
 			label: "Works",
 			slugField: "title",
-			path: "src/content/works/it/*",
+			path: "src/content/works/en/*",
 			entryLayout: "content",
 			columns: ["title", "lastUpdateDate"],
 			previewUrl: "/works/{slug}",
@@ -740,7 +783,13 @@ export default config({
 				link: fields.text({
 					label: "Link",
 					validation: {
-						isRequired: true,
+						isRequired: false,
+					},
+				}),
+				video: fields.text({
+					label: "Video URL",
+					validation: {
+						isRequired: false,
 					},
 				}),
 				description: fields.text({
@@ -779,6 +828,9 @@ export default config({
 						isRequired: true,
 					},
 				}),
+				hidden: fields.checkbox({
+					label: "Hidden",
+				}),
 				content: fields.markdoc({
 					label: "Content",
 					options: {
@@ -792,10 +844,78 @@ export default config({
 				}),
 			},
 		}),
+		services: collection({
+			label: "Services",
+			slugField: "title",
+			path: "src/content/services/en/*",
+			entryLayout: "content",
+			columns: ["title", "lastUpdateDate"],
+			previewUrl: "/services/{slug}",
+			format: { contentField: "content" },
+			schema: {
+				title: fields.slug({
+					name: {
+						label: "Title",
+						description: "Service title",
+						validation: {
+							isRequired: true,
+						},
+					},
+					slug: {
+						label: "SEO-friendly slug",
+						description: "Slug to use for the service page",
+					},
+				}),
+				description: fields.text({
+					label: "Description",
+					multiline: true,
+					validation: {
+						isRequired: true,
+					},
+				}),
+				cover: fields.image({
+					label: "Cover Image",
+					directory: "src/assets/services",
+					publicPath: "@/assets/services/",
+				}),
+				pubDate: fields.date({
+					label: "Publication Date",
+					defaultValue: {
+						kind: "today",
+					},
+					validation: {
+						isRequired: true,
+					},
+				}),
+				lastUpdateDate: fields.date({
+					label: "Last Update Date",
+					defaultValue: {
+						kind: "today",
+					},
+					validation: {
+						isRequired: true,
+					},
+				}),
+				hidden: fields.checkbox({
+					label: "Hidden",
+				}),
+				content: fields.markdoc({
+					label: "Content",
+					options: {
+						heading: [2, 3, 4, 5, 6],
+						image: {
+							directory: "src/assets/services",
+							publicPath: "/src/assets/services/",
+						},
+					},
+					components: {},
+				}),
+			},
+		}),
 		authors: collection({
 			label: "Authors",
 			slugField: "name",
-			path: "src/content/authors/*",
+			path: "src/content/authors/en/*",
 			columns: ["name"],
 			previewUrl: "/author/{slug}",
 			format: { contentField: "content" },
